@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/manna_/static/css/main.1c673ff1.css",
+    "main.js": "/manna_/static/js/main.e4ca343c.js",
+    "static/js/787.203593eb.chunk.js": "/manna_/static/js/787.203593eb.chunk.js",
+    "index.html": "/manna_/index.html",
+    "main.1c673ff1.css.map": "/manna_/static/css/main.1c673ff1.css.map",
+    "main.e4ca343c.js.map": "/manna_/static/js/main.e4ca343c.js.map",
+    "787.203593eb.chunk.js.map": "/manna_/static/js/787.203593eb.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1c673ff1.css",
+    "static/js/main.e4ca343c.js"
+  ]
+}
