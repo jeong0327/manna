@@ -1,0 +1,129 @@
+.order-status {
+  display: flex;
+  padding: 20px;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.order-type {
+  font-size: 60px;
+  font-weight: bold;
+  margin: 0 10px;
+  background-color: yellow;
+}
+
+
+/* form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  width: 300px;
+  background-color: lightgray;
+  padding: 20px;
+}
+
+form label {
+  display: flex;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+form button[type="submit"] {
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  width: 200px;
+  background-color: #4caf50;
+  margin: auto;
+}
+
+form select {
+  margin-left: 13px;
+  padding: 8px;
+  font-size: 18px;
+  width: 200px; 
+}
+
+form input[type="text"],
+form input[type="number"] {
+  margin-left: 10px;
+  padding: 5px;
+  width: 200px; 
+} */
+
+.form-container {
+background-color: #f2f2f2;
+max-width: 500px;
+margin: 0 auto;
+padding: 20px;
+}
+
+.question {
+margin-bottom: 20px;
+}
+
+form label {
+font-weight: bold;
+margin-bottom: 10px;
+display: block;
+}
+
+form button[type="submit"] {
+  padding: 10px 10px;
+  font-size: 20px;
+  width: 150px;
+  background-color: #4caf50;
+  margin: auto;
+}
+
+input[type="text"],
+input[type="number"],
+form select {
+padding: 10px;
+border: 1px solid #ccc;
+border-radius: 5px;
+width: 100%;
+box-sizing: border-box;
+font-size: 16px;
+}
+
+table {
+  width: 100%;
+  max-width: 1000px;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  margin: 50px auto;
+}
+
+caption {
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-size: 30px;
+  text-align: left;
+}
+
+thead th,
+tbody td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.completed-orders-table {
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 10px 10px;
+  background-color: #008CBA;
+  color: white;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+  margin-left: auto;
+  display: block;
+}

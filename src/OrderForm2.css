@@ -1,0 +1,97 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .order-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .order-status p {
+    margin: 5px;
+  }
+  
+  .order-status .order-type {
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #008CBA;
+    color: white;
+  }
+  
+  .order-title {
+    font-size: 32px;
+    margin-bottom: 10px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin-bottom: 20px;
+    background-color: lightgray;
+    padding: 20px;
+  }
+  
+  form label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  form select,
+  form input[type="text"],
+  form input[type="number"] {
+    margin-left: 10px;
+    padding: 5px;
+  }
+  
+  form button[type="submit"] {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    padding: 10px;
+  }
+  
+  caption {
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  thead th,
+  tbody td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .completed-orders-table {
+    margin-bottom: 20px;
+  }
+  
+  button {
+    padding: 5px 10px;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
