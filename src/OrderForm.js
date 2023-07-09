@@ -3,26 +3,86 @@ import * as XLSX from 'xlsx';
 import './OrderForm.css';
 
 function OrderForm() {
-  const [packageTotal, setPackageTotal] = useState(0);
-  const [hallTotal, setHallTotal] = useState(0);
-  const [orderType, setOrderType] = useState('홀');
-  const [name, setName] = useState('');
-  const [tableNumber, setTableNumber] = useState('');
-  const [numberOfPeople, setNumberOfPeople] = useState('');
-  const [money, setMoney] = useState('');
-  const [orders, setOrders] = useState([]);
-  const [completedOrders, setCompletedOrders] = useState([]);
+  const [packageTotal, setPackageTotal] = useState(() => {
+    const savedPackageTotal = localStorage.getItem('packageTotal');
+    return savedPackageTotal ? parseInt(savedPackageTotal, 10) : 0;
+  });
+
+  const [hallTotal, setHallTotal] = useState(() => {
+    const savedHallTotal = localStorage.getItem('hallTotal');
+    return savedHallTotal ? parseInt(savedHallTotal, 10) : 0;
+  });
+
+  const [orderType, setOrderType] = useState(() => {
+    const savedOrderType = localStorage.getItem('orderType');
+    return savedOrderType || '홀';
+  });
+
+  const [name, setName] = useState(() => {
+    const savedName = localStorage.getItem('name');
+    return savedName || '';
+  });
+
+  const [tableNumber, setTableNumber] = useState(() => {
+    const savedTableNumber = localStorage.getItem('tableNumber');
+    return savedTableNumber || '';
+  });
+
+  const [numberOfPeople, setNumberOfPeople] = useState(() => {
+    const savedNumberOfPeople = localStorage.getItem('numberOfPeople');
+    return savedNumberOfPeople || '';
+  });
+
+  const [money, setMoney] = useState(() => {
+    const savedMoney = localStorage.getItem('money');
+    return savedMoney || '';
+  });
+
+  const [orders, setOrders] = useState(() => {
+    const savedOrders = localStorage.getItem('orders');
+    return savedOrders ? JSON.parse(savedOrders) : [];
+  });
+
+  const [completedOrders, setCompletedOrders] = useState(() => {
+    const savedCompletedOrders = localStorage.getItem('completedOrders');
+    return savedCompletedOrders ? JSON.parse(savedCompletedOrders) : [];
+  });
 
   useEffect(() => {
-    const savedOrders = localStorage.getItem('orders');
-    if (savedOrders) {
-      setOrders(JSON.parse(savedOrders));
-    }
-  }, []);
+    localStorage.setItem('packageTotal', packageTotal.toString());
+  }, [packageTotal]);
+
+  useEffect(() => {
+    localStorage.setItem('hallTotal', hallTotal.toString());
+  }, [hallTotal]);
+
+  useEffect(() => {
+    localStorage.setItem('orderType', orderType);
+  }, [orderType]);
+
+  useEffect(() => {
+    localStorage.setItem('name', name);
+  }, [name]);
+
+  useEffect(() => {
+    localStorage.setItem('tableNumber', tableNumber);
+  }, [tableNumber]);
+
+  useEffect(() => {
+    localStorage.setItem('numberOfPeople', numberOfPeople);
+  }, [numberOfPeople]);
+
+  useEffect(() => {
+    localStorage.setItem('money', money);
+  }, [money]);
 
   useEffect(() => {
     localStorage.setItem('orders', JSON.stringify(orders));
   }, [orders]);
+
+  useEffect(() => {
+    localStorage.setItem('completedOrders', JSON.stringify(completedOrders));
+  }, [completedOrders]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -40,6 +100,7 @@ function OrderForm() {
       numberOfPeople: numberOfPeople,
       money: money
     };
+
     setOrders([...orders, newOrder]);
     setOrderType('홀');
     setName('');
@@ -48,9 +109,9 @@ function OrderForm() {
     setMoney('');
 
     if (orderType === '포장') {
-      setPackageTotal(packageTotal + Number(numberOfPeople));
+      setPackageTotal((prevPackageTotal) => prevPackageTotal + parsedNumberOfPeople);
     } else if (orderType === '홀') {
-      setHallTotal(hallTotal + Number(numberOfPeople));
+      setHallTotal((prevHallTotal) => prevHallTotal + parsedNumberOfPeople);
     }
   };
 
@@ -60,9 +121,9 @@ function OrderForm() {
     setOrders(updatedOrders);
 
     if (order.orderType === '포장') {
-      setPackageTotal(packageTotal - Number(order.numberOfPeople));
+      setPackageTotal((prevPackageTotal) => prevPackageTotal - order.numberOfPeople);
     } else if (order.orderType === '홀') {
-      setHallTotal(hallTotal - Number(order.numberOfPeople));
+      setHallTotal((prevHallTotal) => prevHallTotal - order.numberOfPeople);
     }
 
     setCompletedOrders([...completedOrders, order]);
@@ -71,6 +132,19 @@ function OrderForm() {
     if (checkbox) {
       checkbox.checked = false;
     }
+  };
+
+  const handleReset = () => {
+    setPackageTotal(0);
+    setHallTotal(0);
+    setOrderType('홀');
+    setName('');
+    setTableNumber('');
+    setNumberOfPeople('');
+    setMoney('');
+    setOrders([]);
+    setCompletedOrders([]);
+    localStorage.clear();
   };
 
   const saveAsExcel = () => {
@@ -91,7 +165,7 @@ function OrderForm() {
     link.download = `만나_${year}${month}${day}.xlsx`;
     link.click();
   };
-  
+
   const s2ab = (s) => {
     const buf = new ArrayBuffer(s.length);
     const view = new Uint8Array(buf);
@@ -99,7 +173,7 @@ function OrderForm() {
       view[i] = s.charCodeAt(i) & 0xff;
     }
     return buf;
-  };  
+  };
 
   return (
     <div>
@@ -160,6 +234,7 @@ function OrderForm() {
         </form>
       </div>
 
+      <button onClick={handleReset}>모든 데이터 초기화</button>
       <button onClick={saveAsExcel}>엑셀 파일로 저장</button>  
 
       <div className='order-status'>

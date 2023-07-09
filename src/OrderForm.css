@@ -122,7 +122,7 @@ button {
   background-color: #008CBA;
   color: white;
   font-size: 20px;
-  border: none;
+  /* border: none; */
   cursor: pointer;
   margin-left: auto;
   display: block;
