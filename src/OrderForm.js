@@ -7,14 +7,13 @@ function OrderForm() {
   const [hallTotal, setHallTotal] = useState(0);
   const [orderType, setOrderType] = useState('홀');
   const [name, setName] = useState('');
-  const [tableNumber, setTableNumber] = useState();
+  const [tableNumber, setTableNumber] = useState('');
   const [numberOfPeople, setNumberOfPeople] = useState('');
   const [money, setMoney] = useState('');
   const [orders, setOrders] = useState([]);
   const [completedOrders, setCompletedOrders] = useState([]);
 
   useEffect(() => {
-    // Load saved orders from local storage on component mount
     const savedOrders = localStorage.getItem('orders');
     if (savedOrders) {
       setOrders(JSON.parse(savedOrders));
@@ -22,19 +21,17 @@ function OrderForm() {
   }, []);
 
   useEffect(() => {
-    // Save orders to local storage whenever it changes
     localStorage.setItem('orders', JSON.stringify(orders));
   }, [orders]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Ensure that the number of people is a valid positive integer
     const parsedNumberOfPeople = parseInt(numberOfPeople, 10);
     if (isNaN(parsedNumberOfPeople) || parsedNumberOfPeople < 1) {
       alert('인원수는 1 이상의 수를 입력하세요');
       return;
-    }  
+    }
 
     const newOrder = {
       orderType: orderType,
@@ -50,11 +47,10 @@ function OrderForm() {
     setNumberOfPeople('');
     setMoney('');
 
-    // Update cumulative number of people for package and hall orders
     if (orderType === '포장') {
-        setPackageTotal(packageTotal + Number(numberOfPeople));
+      setPackageTotal(packageTotal + Number(numberOfPeople));
     } else if (orderType === '홀') {
-        setHallTotal(hallTotal + Number(numberOfPeople));
+      setHallTotal(hallTotal + Number(numberOfPeople));
     }
   };
 
@@ -63,41 +59,32 @@ function OrderForm() {
     updatedOrders.splice(index, 1);
     setOrders(updatedOrders);
 
-    // Update cumulative number of people for package and hall orders
     if (order.orderType === '포장') {
-        setPackageTotal(packageTotal - Number(order.numberOfPeople));
+      setPackageTotal(packageTotal - Number(order.numberOfPeople));
     } else if (order.orderType === '홀') {
-        setHallTotal(hallTotal - Number(order.numberOfPeople));
+      setHallTotal(hallTotal - Number(order.numberOfPeople));
     }
 
-    // Move order to completed orders
     setCompletedOrders([...completedOrders, order]);
 
-    // Reset the checkbox to unchecked
     const checkbox = document.getElementById(`checkbox-${index}`);
     if (checkbox) {
       checkbox.checked = false;
     }
   };
 
-  // 주문 정보 엑셀로 저장
   const saveAsExcel = () => {
-    // Create a new workbook
     const workbook = XLSX.utils.book_new();
     const completedOrdersWorksheet = XLSX.utils.json_to_sheet(completedOrders);
     XLSX.utils.book_append_sheet(workbook, completedOrdersWorksheet, '만나 주문');
-    // Generate an Excel file in binary form
     const excelData = XLSX.write(workbook, { bookType: 'xlsx', type: 'binary' });
-    // Convert binary data to a Blob object
     const blob = new Blob([s2ab(excelData)], { type: 'application/octet-stream' });
 
-    // 오늘 날짜
     const date = new Date();
     const year = date.getFullYear().toString().slice(-2);
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const day = date.getDate().toString().padStart(2, '0');
 
-    // Create a download link and trigger the file download
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
@@ -105,7 +92,6 @@ function OrderForm() {
     link.click();
   };
   
-  // Helper function to convert string to ArrayBuffer
   const s2ab = (s) => {
     const buf = new ArrayBuffer(s.length);
     const view = new Uint8Array(buf);
@@ -117,7 +103,7 @@ function OrderForm() {
 
   return (
     <div>
-        <div className='form-container'>
+      <div className='form-container'>
         <form onSubmit={handleSubmit}>
           <div className='question'>
             <label>
@@ -196,21 +182,21 @@ function OrderForm() {
           </thead>
           <tbody>
             {orders.map((order, index) => (
-                <tr key={index}>
-                    <td>{order.orderType}</td>
-                    <td>{order.name}</td>
-                    <td>{order.tableNumber}</td>
-                    <td>{order.numberOfPeople}</td>
-                    <td>{order.money}</td>
-                    <td>
-                    <input
-                        id = {`checkbox-${index}`}
-                        type="checkbox"
-                        onChange={() => handleCompleted(index, order)}
-                    />
-                    </td>
-                </tr>
-                ))}
+              <tr key={index}>
+                <td>{order.orderType}</td>
+                <td>{order.name}</td>
+                <td>{order.tableNumber}</td>
+                <td>{order.numberOfPeople}</td>
+                <td>{order.money}</td>
+                <td>
+                  <input
+                    id={`checkbox-${index}`}
+                    type="checkbox"
+                    onChange={() => handleCompleted(index, order)}
+                  />
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       )}
